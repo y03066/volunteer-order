@@ -505,7 +505,11 @@ import {
   remove
 }
 from "https://www.gstatic.com/firebasejs/11.10.0/firebase-database.js";
-
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  signOut
+} from "https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCfDx9WW-yJYkKauGDy8QarsQKVWevo2b4",
@@ -519,6 +523,7 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
+  const auth = getAuth(app);
 
 let DB = {
   orders:{},
@@ -568,50 +573,22 @@ onValue(ref(db,"admins"),s=>{
 
 /* 登入 */
 
-window.login=function(){
+ $("adminBtn").style.display="block";
 
-  const emp=$("loginEmp").value.trim().toUpperCase();
-  const pwd=$("loginPwd").value;
+    renderAll();
+    toast("登入成功");
 
-  $("loginErr").textContent="";
+  }catch(error){
+    console.error(error);
 
-  if(!emp || !pwd){
-    $("loginErr").textContent="請輸入員編及密碼";
-    return;
+    if(error.code==="auth/invalid-credential"){
+      $("loginErr").textContent="帳號或密碼錯誤";
+    }else if(error.code==="auth/invalid-email"){
+      $("loginErr").textContent="電子郵件格式錯誤";
+    }else{
+      $("loginErr").textContent="登入失敗："+error.code;
+    }
   }
-
-  const a=(DB.admins||{})[emp];
-
-  if(!a){
-    $("loginErr").textContent="查無此管理員";
-    return;
-  }
-
-  const savedPwd=String(a.pwd ?? a.password ?? "");
-
-  if(savedPwd!==pwd){
-    $("loginErr").textContent="密碼錯誤";
-    return;
-  }
-
-  loggedAdmin={
-    emp,
-    name:a.name||emp,
-    role:a.role||"social"
-  };
-
-  $("loginScreen").style.display="none";
-  $("layout").style.display="flex";
-
-  $("userInfo").innerHTML=
-    `👤 ${loggedAdmin.name}<br>${emp}<br>`+
-    (loggedAdmin.role==="super"?"超級管理員":"社工室管理員");
-
-  $("adminBtn").style.display=
-    loggedAdmin.role==="super" ? "block" : "none";
-
-  renderAll();
-  toast("登入成功");
 };
 
 
