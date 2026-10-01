@@ -3,815 +3,1068 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>⚙️ 院餐訂餐系統</title>
+<title>院餐訂餐系統｜管理後台</title>
+
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap');
-*{box-sizing:border-box;margin:0;padding:0}
-:root{--pri:#1e5c38;--pri-l:#2d8a4e;--pri-bg:#d8f3dc;--purple:#7c3aed;--purple-l:#8b5cf6;--purple-bg:#f5f3ff;--amber:#d97706;--amber-bg:#fef3c7;--red:#dc2626;--red-bg:#fee2e2;--blue:#2563eb;--blue-bg:#dbeafe;--g50:#f8fafc;--g100:#f1f5f9;--g200:#e2e8f0;--g300:#cbd5e1;--g400:#94a3b8;--g500:#64748b;--g600:#475569;--g700:#334155;--g800:#1e293b;--g900:#0f172a;--sidebar:210px;--radius:12px;--shadow:0 2px 8px rgba(0,0,0,.08)}
-body{font-family:'Noto Sans TC',sans-serif;background:var(--g100);color:var(--g800);min-height:100vh}
-.login-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#1e5c38 0%,#2d8a4e 100%)}
-.login-card{background:#fff;border-radius:16px;padding:36px 32px;width:340px;box-shadow:0 8px 32px rgba(0,0,0,.18)}
-.login-logo{text-align:center;font-size:38px;margin-bottom:8px}
-.login-title{text-align:center;font-size:18px;font-weight:700;margin-bottom:4px}
-.login-sub{text-align:center;font-size:13px;color:var(--g500);margin-bottom:24px}
-.layout{display:flex;min-height:100vh}
-.sidebar{width:var(--sidebar);background:var(--g900);position:fixed;top:0;left:0;bottom:0;overflow-y:auto;z-index:50;display:flex;flex-direction:column}
-.sb-logo{padding:18px 16px;border-bottom:1px solid rgba(255,255,255,.08);display:flex;align-items:center;gap:9px}
-.sb-logo-icon{font-size:22px}
-.sb-logo-text{font-size:14px;font-weight:700;color:#fff}
-.sb-logo-sub{font-size:11px;color:rgba(255,255,255,.45);margin-top:1px}
-.sb-section{padding:8px 0;border-bottom:1px solid rgba(255,255,255,.06)}
-.sb-label{font-size:10px;color:rgba(255,255,255,.35);padding:8px 16px 4px;letter-spacing:1px;text-transform:uppercase;font-weight:600}
-.sb-item{display:flex;align-items:center;gap:8px;padding:10px 16px;color:rgba(255,255,255,.6);font-size:13px;cursor:pointer;border:none;background:none;width:100%;text-align:left;font-family:inherit;transition:all .15s;font-weight:500}
-.sb-item:hover{color:#fff;background:rgba(255,255,255,.07)}
-.sb-item.on{color:#fff;background:var(--pri-l);font-weight:700}
-.sb-item.on.social-item{background:var(--purple-l)}
-.sb-item .si{font-size:16px;flex-shrink:0}
-.sb-bottom{margin-top:auto;padding:12px;border-top:1px solid rgba(255,255,255,.08)}
-.sb-user{font-size:11px;color:rgba(255,255,255,.4);padding:4px 8px;line-height:1.6}
-.sb-dept-badge{display:inline-block;padding:2px 8px;border-radius:999px;font-size:10px;font-weight:700;margin-top:3px}
-.sb-dept-rehab{background:var(--pri-bg);color:var(--pri)}
-.sb-dept-social{background:var(--purple-bg);color:var(--purple)}
-.main{margin-left:var(--sidebar);flex:1;display:flex;flex-direction:column}
-.topbar{background:#fff;border-bottom:1px solid var(--g200);padding:0 24px;height:52px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:40;box-shadow:0 1px 4px rgba(0,0,0,.06)}
-.tb-title{font-size:15px;font-weight:700}
-.tb-links{display:flex;gap:8px}
-.tb-link{padding:6px 12px;border-radius:20px;font-size:13px;font-weight:500;background:var(--pri-bg);color:var(--pri);border:none;cursor:pointer;font-family:inherit;text-decoration:none;display:flex;align-items:center;gap:4px}
-.tb-link:hover{background:var(--pri-l);color:#fff}
-.content{padding:24px;flex:1}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:"Noto Sans TC","Microsoft JhengHei",sans-serif;
+  background:#f3f6f4;
+  color:#263238;
+}
+button,input,select{font:inherit}
+
+/* 登入 */
+.login-wrap{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  background:linear-gradient(135deg,#176b3a,#2d9657);
+}
+.login-card{
+  width:100%;
+  max-width:420px;
+  background:#fff;
+  border-radius:20px;
+  padding:38px 32px;
+  box-shadow:0 12px 40px rgba(0,0,0,.18);
+}
+.logo{text-align:center;font-size:42px}
+.login-title{
+  text-align:center;
+  font-size:24px;
+  font-weight:800;
+  margin:8px 0 4px;
+}
+.login-sub{
+  text-align:center;
+  color:#6b7280;
+  margin-bottom:28px;
+}
+.lbl{font-weight:700;margin:14px 0 7px}
+.fc{
+  width:100%;
+  border:1px solid #d6dfda;
+  border-radius:12px;
+  padding:13px 14px;
+  outline:none;
+}
+.fc:focus{
+  border-color:#269253;
+  box-shadow:0 0 0 3px rgba(38,146,83,.12);
+}
+.login-btn{
+  width:100%;
+  margin-top:22px;
+  border:0;
+  border-radius:12px;
+  padding:14px;
+  background:#278f50;
+  color:white;
+  font-weight:800;
+  font-size:17px;
+  cursor:pointer;
+}
+.err{
+  color:#c62828;
+  text-align:center;
+  min-height:24px;
+  margin-top:12px;
+}
+
+/* 後台 */
+.layout{display:none;min-height:100vh}
+.sidebar{
+  position:fixed;
+  left:0;top:0;bottom:0;
+  width:230px;
+  background:#163d29;
+  color:white;
+  padding:20px 14px;
+}
+.sb-title{
+  font-size:20px;
+  font-weight:800;
+  padding:10px 10px 20px;
+  border-bottom:1px solid rgba(255,255,255,.15);
+}
+.sb-user{
+  padding:16px 10px;
+  font-size:13px;
+  color:#d4e7dc;
+}
+.sb-btn{
+  display:block;
+  width:100%;
+  border:0;
+  background:transparent;
+  color:white;
+  text-align:left;
+  padding:12px;
+  border-radius:9px;
+  margin:4px 0;
+  cursor:pointer;
+}
+.sb-btn:hover,.sb-btn.on{background:#286344}
+.logout{
+  position:absolute;
+  left:14px;right:14px;bottom:18px;
+}
+.main{margin-left:230px;padding:28px}
+.top{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:22px;
+}
+.page-title{font-size:25px;font-weight:800}
+.card{
+  background:white;
+  border-radius:14px;
+  box-shadow:0 2px 10px rgba(0,0,0,.06);
+  margin-bottom:18px;
+  overflow:hidden;
+}
+.card-hd{
+  padding:16px 18px;
+  font-weight:800;
+  border-bottom:1px solid #edf0ee;
+}
+.card-bd{padding:18px}
+.row{
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+}
+.row .fc{width:auto;min-width:160px}
+.btn{
+  border:0;
+  border-radius:9px;
+  padding:10px 15px;
+  cursor:pointer;
+  font-weight:700;
+}
+.btn-g{background:#278f50;color:white}
+.btn-r{background:#d9534f;color:white}
+.btn-o{background:#edf3ef;color:#254c35}
+.stats{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:14px;
+  margin-bottom:18px;
+}
+.stat{
+  background:#fff;
+  border-radius:14px;
+  padding:20px;
+  box-shadow:0 2px 10px rgba(0,0,0,.05);
+}
+.stat-n{font-size:27px;font-weight:800;color:#23864b}
+.stat-l{color:#6b7280;font-size:13px;margin-top:5px}
+.tbl-wrap{overflow:auto}
+table{
+  width:100%;
+  border-collapse:collapse;
+  white-space:nowrap;
+}
+th,td{
+  padding:11px 12px;
+  border-bottom:1px solid #edf0ee;
+  text-align:left;
+  font-size:14px;
+}
+th{background:#f7faf8}
+.no-data{text-align:center;color:#888;padding:30px}
 .sec{display:none}
 .sec.on{display:block}
-.page-title{font-size:20px;font-weight:700;margin-bottom:4px}
-.page-sub{font-size:13px;color:var(--g500);margin-bottom:20px}
-.card{background:#fff;border-radius:var(--radius);border:1px solid var(--g200);box-shadow:var(--shadow);margin-bottom:16px}
-.card-hd{padding:14px 18px;border-bottom:1px solid var(--g100);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
-.card-title{font-size:14px;font-weight:700}
-.card-bd{padding:16px 18px}
-/* 雙部門分頁標籤 */
-.dept-tabs{display:flex;gap:0;border-bottom:2px solid var(--g200);margin-bottom:20px}
-.dept-tab{padding:10px 20px;font-size:14px;font-weight:600;cursor:pointer;border:none;background:none;font-family:inherit;color:var(--g500);border-bottom:3px solid transparent;margin-bottom:-2px;transition:all .15s}
-.dept-tab:hover{color:var(--g800)}
-.dept-tab.on.rehab{color:var(--pri-l);border-bottom-color:var(--pri-l)}
-.dept-tab.on.social{color:var(--purple);border-bottom-color:var(--purple)}
-.dept-panel{display:none}
-.dept-panel.on{display:block}
-/* 統計卡片 */
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px}
-@media(max-width:800px){.stats{grid-template-columns:repeat(2,1fr)}}
-.stat{background:#fff;border-radius:var(--radius);border:1px solid var(--g200);padding:14px 16px;text-align:center;box-shadow:var(--shadow)}
-.stat-lbl{font-size:12px;color:var(--g500);margin-bottom:4px;font-weight:500}
-.stat-val{font-size:26px;font-weight:700}
-.c-g{color:var(--pri-l)}.c-r{color:var(--red)}.c-a{color:var(--amber)}.c-p{color:var(--purple)}
-.fl{display:flex;flex-direction:column;gap:11px}
-.lbl{font-size:12px;color:var(--g600);font-weight:500;margin-bottom:4px}
-.fc{width:100%;padding:9px 12px;border:1.5px solid var(--g200);border-radius:9px;font-size:14px;font-family:inherit;background:#fff;color:var(--g800);outline:none;appearance:none;-webkit-appearance:none;transition:border-color .18s}
-.fc:focus{border-color:var(--pri-l)}
-.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
-.tbl{width:100%;border-collapse:collapse;font-size:13px}
-.tbl th{background:var(--g50);padding:10px 12px;text-align:left;font-weight:600;color:var(--g600);border-bottom:2px solid var(--g200);white-space:nowrap}
-.tbl td{padding:9px 12px;border-bottom:1px solid var(--g100);vertical-align:middle}
-.tbl tr:hover td{background:var(--g50)}
-.tbl-wrap{overflow-x:auto}
-.no-data{text-align:center;color:var(--g400);padding:28px;font-size:13px}
-.btn{display:inline-flex;align-items:center;gap:5px;padding:8px 16px;border-radius:8px;border:none;font-size:13px;font-weight:600;font-family:inherit;cursor:pointer;transition:all .15s;white-space:nowrap}
-.btn:active{transform:scale(.97)}
-.btn-g{background:var(--pri-l);color:#fff}.btn-g:hover{background:var(--pri)}
-.btn-p{background:var(--purple);color:#fff}.btn-p:hover{background:#6d28d9}
-.btn-r{background:var(--red);color:#fff}.btn-r:hover{background:#b91c1c}
-.btn-o{background:var(--g100);color:var(--g700);border:1px solid var(--g200)}.btn-o:hover{background:var(--g200)}
-.btn-exp{background:#0f766e;color:#fff}
-.btn-full{width:100%;justify-content:center}
-.btn-login{width:100%;justify-content:center;padding:13px;font-size:15px;background:var(--pri-l);color:#fff;border-radius:10px;border:none;font-family:inherit;font-weight:700;cursor:pointer;transition:all .15s}
-.btn-login:hover{background:var(--pri)}
-.acts{display:flex;gap:6px}
-.badge{display:inline-block;padding:2px 9px;border-radius:999px;font-size:11px;font-weight:700}
-.bdg-g{background:var(--pri-bg);color:var(--pri)}.bdg-r{background:var(--red-bg);color:var(--red)}.bdg-a{background:var(--amber-bg);color:var(--amber)}.bdg-b{background:var(--blue-bg);color:var(--blue)}.bdg-p{background:var(--purple-bg);color:var(--purple)}
-.import-btn{display:inline-flex;align-items:center;gap:5px;padding:7px 14px;border-radius:8px;border:1.5px dashed var(--g300);background:#fff;color:var(--g600);font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;transition:all .15s}
-.import-btn:hover{border-color:var(--pri-l);color:var(--pri)}
-.al{padding:11px 14px;border-radius:9px;font-size:13px;line-height:1.6;display:flex;gap:8px;margin-bottom:12px}
-.al-r{background:var(--red-bg);border:1px solid #fca5a5;color:#7f1d1d}
-.al-y{background:#fef3c7;border:1px solid #fde68a;color:#713f12}
-#toast{position:fixed;bottom:20px;right:20px;padding:11px 18px;border-radius:10px;font-size:13px;font-weight:600;color:#fff;z-index:9999;opacity:0;transform:translateY(6px);transition:all .3s;pointer-events:none}
-#toast.show{opacity:1;transform:translateY(0)}
-#toast.tg{background:var(--pri-l)}#toast.tr{background:var(--red)}
-.live-badge{font-size:11px;background:var(--pri-bg);color:var(--pri);padding:2px 8px;border-radius:999px;font-weight:600}
-/* 密碼修改區 */
-.pwd-section{background:var(--g50);border-radius:10px;padding:16px;margin-top:16px;border:1px solid var(--g200)}
-.pwd-title{font-size:13px;font-weight:700;color:var(--g700);margin-bottom:12px;display:flex;align-items:center;gap:6px}
-/* 角色標識 */
-.role-pill{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:999px;font-size:11px;font-weight:700}
-.role-super{background:#dbeafe;color:#1d4ed8}
-.role-rehab{background:var(--pri-bg);color:var(--pri)}
-.role-social{background:var(--purple-bg);color:var(--purple)}
+.badge{
+  display:inline-block;
+  padding:4px 9px;
+  border-radius:20px;
+  background:#e6f5ec;
+  color:#176b3a;
+  font-size:12px;
+}
+.toast{
+  display:none;
+  position:fixed;
+  right:20px;
+  bottom:20px;
+  background:#263238;
+  color:#fff;
+  padding:12px 18px;
+  border-radius:9px;
+  z-index:1000;
+}
+
+/* 手機 */
+@media(max-width:760px){
+  .sidebar{
+    position:relative;
+    width:100%;
+    height:auto;
+  }
+  .layout{display:none;flex-direction:column}
+  .main{margin-left:0;padding:15px}
+  .logout{position:static;margin-top:15px}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .row .fc{width:100%}
+}
 </style>
 </head>
+
 <body>
-<div id="toast"></div>
 
-<div id="login-screen" class="login-wrap">
+<!-- 登入 -->
+<div id="loginScreen" class="login-wrap">
   <div class="login-card">
-    <div class="login-logo">🍱</div>
+    <div class="logo">🍱</div>
     <div class="login-title">院餐訂餐系統</div>
-    <div class="login-sub">實習生訂餐系統 — 管理員專用</div>
-    <div class="fl">
-      <div><div class="lbl">員編</div><input class="fc" id="adm-emp" placeholder="例：Y00001" oninput="this.value=this.value.toUpperCase()" onkeydown="if(event.key==='Enter')doAdminLogin()"></div>
-      <div><div class="lbl">密碼</div><input class="fc" type="password" id="adm-pwd" onkeydown="if(event.key==='Enter')doAdminLogin()"></div>
-      <div id="login-err"></div>
-      <button class="btn-login" onclick="doAdminLogin()">登入後台 →</button>
-    </div>
+    <div class="login-sub">社工室｜管理員專用</div>
+
+    <div class="lbl">員編</div>
+    <input id="loginEmp" class="fc"
+           placeholder="例：Y00001"
+           autocomplete="username"
+           oninput="this.value=this.value.toUpperCase()">
+
+    <div class="lbl">密碼</div>
+    <input id="loginPwd" class="fc"
+           type="password"
+           autocomplete="current-password"
+           onkeydown="if(event.key==='Enter') login()">
+
+    <button class="login-btn" onclick="login()">登入後台 →</button>
+
+    <div id="loginErr" class="err"></div>
   </div>
 </div>
 
-<div id="admin-layout" class="layout" style="display:none">
-  <div class="sidebar">
-    <div class="sb-logo"><div class="sb-logo-icon">🍱</div><div><div class="sb-logo-text">訂餐後台</div><div class="sb-logo-sub" id="sync-time">同步中...</div></div></div>
 
-    <!-- 訂餐統計（全部人都看得到，但內容依角色過濾） -->
-    <div class="sb-section">
-      <div class="sb-label">數據</div>
-      <button class="sb-item on" data-sec="sec-orders" onclick="showSec(this)"><span class="si">📋</span>訂餐統計</button>
+<!-- 管理後台 -->
+<div id="layout" class="layout">
+
+  <aside class="sidebar">
+    <div class="sb-title">🍱 院餐訂餐系統</div>
+
+    <div id="userInfo" class="sb-user"></div>
+
+    <button class="sb-btn on" onclick="showSec('orders',this)">
+      📋 訂餐統計
+    </button>
+
+    <button class="sb-btn" onclick="showSec('menu',this)">
+      📝 菜單管理
+    </button>
+
+    <button class="sb-btn" onclick="showSec('staff',this)">
+      🤝 社工室志工名單
+    </button>
+
+    <button id="adminBtn" class="sb-btn" onclick="showSec('admins',this)">
+      🔐 管理員設定
+    </button>
+
+    <div class="logout">
+      <button class="sb-btn" onclick="logout()">↩ 登出</button>
+    </div>
+  </aside>
+
+
+  <main class="main">
+
+    <div class="top">
+      <div id="pageTitle" class="page-title">📋 訂餐統計</div>
+      <span class="badge">即時同步</span>
     </div>
 
-    <!-- 設定選單（依角色顯示不同項目） -->
-    <div class="sb-section" id="sb-settings">
-      <div class="sb-label">設定</div>
-      <button class="sb-item" id="sb-menu" data-sec="sec-menu" onclick="showSec(this)"><span class="si">📝</span>菜單管理</button>
-      <button class="sb-item" id="sb-rehab-staff" data-sec="sec-staff" onclick="showSec(this)"><span class="si">👥</span>復健部人員</button>
-      <button class="sb-item" id="sb-social-staff" data-sec="sec-social-staff" onclick="showSec(this)"><span class="si">🤝</span>社工室志工</button>
-      <button class="sb-item" id="sb-admins" data-sec="sec-admins" onclick="showSec(this)"><span class="si">🔐</span>管理員設定</button>
-    </div>
 
-    <div class="sb-bottom">
-      <div class="sb-user" id="sb-user-info">—</div>
-      <button class="sb-item" data-sec="sec-pwd" onclick="showSec(this)"><span class="si">🔑</span>修改密碼</button>
-      <button class="sb-item" onclick="doLogout()" style="color:rgba(255,255,255,.45)"><span class="si">←</span>登出</button>
-    </div>
-  </div>
+    <!-- 訂餐統計 -->
+    <section id="sec-orders" class="sec on">
 
-  <div class="main">
-    <div class="topbar">
-      <div class="tb-title" id="topbar-section-title">📋 訂餐統計</div>
-      <div class="tb-links">
-        <a class="tb-link" href="01-order.html">🍱 訂餐</a>
-        <a class="tb-link" href="02-pickup.html">🧺 取餐</a>
-      </div>
-    </div>
-    <div class="content">
-
-      <!-- ══ 訂餐統計：依角色顯示分頁 ══ -->
-      <div id="sec-orders" class="sec on">
-        <div class="page-title">📋 訂餐統計</div>
-        <div class="page-sub">查詢訂單明細與份數彙總</div>
-        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;align-items:center">
-          <input type="date" class="fc" id="ord-date" style="width:auto" onchange="renderOrders()">
-          <button class="btn btn-exp" onclick="exportOrders()">📥 匯出 CSV</button>
-          <button class="btn btn-o" onclick="window.print()">🖨️ 列印</button>
-          <span class="live-badge" id="live-badge">即時同步中</span>
-        </div>
-
-        <!-- 復健部 Tab -->
-        <div id="dept-tabs-wrap" class="dept-tabs">
-          <button class="dept-tab on rehab" id="tab-rehab" onclick="switchDeptTab('rehab')">🩺 復健部</button>
-          <button class="dept-tab social" id="tab-social" onclick="switchDeptTab('social')">🤝 社工室</button>
-        </div>
-
-        <!-- 復健部統計 -->
-        <div id="panel-rehab" class="dept-panel on">
-          <div class="stats" id="ord-stats-rehab"></div>
-          <div class="card">
-            <div class="card-hd"><div class="card-title">份數彙總（復健部）</div></div>
-            <div class="card-bd" style="padding:0"><div class="tbl-wrap">
-              <table class="tbl"><thead><tr><th>類別</th><th>菜名</th><th>飯種</th><th style="text-align:center">訂購</th><th style="text-align:center">已領</th><th style="text-align:center">未領</th></tr></thead>
-              <tbody id="sum-tbody-rehab"></tbody></table>
-            </div></div>
-          </div>
-          <div class="card">
-            <div class="card-hd"><div class="card-title">訂單明細（復健部）</div></div>
-            <div class="card-bd" style="padding:0"><div class="tbl-wrap">
-              <table class="tbl"><thead><tr><th>員編</th><th>姓名</th><th>部門</th><th>日期</th><th>餐別</th><th>地點</th><th>類別</th><th>菜名</th><th>飯種</th><th>份數</th><th>狀態</th><th>操作</th></tr></thead>
-              <tbody id="ord-tbody-rehab"></tbody></table>
-            </div></div>
-          </div>
-        </div>
-
-        <!-- 社工室統計 -->
-        <div id="panel-social" class="dept-panel">
-          <div class="stats" id="ord-stats-social"></div>
-          <div class="card">
-            <div class="card-hd"><div class="card-title">份數彙總（社工室）</div></div>
-            <div class="card-bd" style="padding:0"><div class="tbl-wrap">
-              <table class="tbl"><thead><tr><th>類別</th><th>菜名</th><th>飯種</th><th style="text-align:center">訂購</th><th style="text-align:center">已領</th><th style="text-align:center">未領</th></tr></thead>
-              <tbody id="sum-tbody-social"></tbody></tbody></table>
-            </div></div>
-          </div>
-          <div class="card">
-            <div class="card-hd"><div class="card-title">訂單明細（社工室）</div></div>
-            <div class="card-bd" style="padding:0"><div class="tbl-wrap">
-              <table class="tbl"><thead><tr><th>ID</th><th>姓名</th><th>部門</th><th>日期</th><th>餐別</th><th>地點</th><th>類別</th><th>菜名</th><th>飯種</th><th>份數</th><th>狀態</th><th>操作</th></tr></thead>
-              <tbody id="ord-tbody-social"></tbody></table>
-            </div></div>
-          </div>
+      <div class="card">
+        <div class="card-bd row">
+          <input id="orderDate" class="fc" type="date" onchange="renderOrders()">
+          <button class="btn btn-o" onclick="exportCSV()">⬇ 匯出 CSV</button>
+          <button class="btn btn-o" onclick="window.print()">🖨 列印</button>
         </div>
       </div>
 
-      <!-- ══ 菜單管理（super only） ══ -->
-      <div id="sec-menu" class="sec">
-        <div class="page-title">📝 菜單管理</div>
-        <div class="page-sub">輸入每週供餐菜色，新增後立即同步到訂餐系統</div>
-
-        <div class="card" style="border:2px solid var(--blue);margin-bottom:16px">
-          <div class="card-hd" style="background:var(--blue-bg)">
-            <div class="card-title" style="color:var(--blue)">📥 批次匯入菜單（建議優先使用）</div>
-          </div>
-          <div class="card-bd">
-            <div style="font-size:13px;color:var(--g600);margin-bottom:12px;line-height:1.8">
-              CSV 格式（第一列為標題，之後每列一天）：<br>
-              <code style="background:var(--g100);padding:2px 8px;border-radius:4px;font-size:12px">日期,主菜一,主菜二,素食,晚餐主菜一,晚餐主菜二,晚餐素食</code><br>
-              例：<code style="background:var(--g100);padding:2px 8px;border-radius:4px;font-size:12px">2026/04/22,肉骨茶燉肉,野菇蒜味雞塊,素麻婆豆腐,清蒸檸檬鱸魚,栗子燒肉,素三寶</code>
-            </div>
-            <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
-              <label class="import-btn" style="border-color:var(--blue);color:var(--blue)">
-                📂 選擇 CSV 檔案
-                <input type="file" accept=".csv,.xlsx" style="display:none" onchange="importMenuCSV(this)">
-              </label>
-              <button class="btn" style="background:var(--blue);color:#fff;padding:9px 20px" onclick="saveImportedMenus()">🔄 寫入 Firebase（同步）</button>
-              <span id="import-status" style="font-size:13px;color:var(--g500)"></span>
-            </div>
-          </div>
+      <div class="stats">
+        <div class="stat">
+          <div id="stTotal" class="stat-n">0</div>
+          <div class="stat-l">訂餐總份數</div>
         </div>
 
-        <div class="card">
-          <div class="card-hd">
-            <div class="card-title">✏️ 手動新增單筆菜單</div>
-            <span id="menu-firebase-status" class="badge bdg-g" style="display:none">已同步 Firebase ✅</span>
-          </div>
-          <div class="card-bd">
-            <div style="font-size:13px;font-weight:700;color:var(--pri);margin-bottom:8px;padding:6px 10px;background:var(--pri-bg);border-radius:6px">🌞 午餐</div>
-            <div style="display:grid;grid-template-columns:110px 1fr 1fr 1fr;gap:8px;margin-bottom:14px">
-              <div><div class="lbl">日期</div><input class="fc" type="date" id="m-date"></div>
-              <div><div class="lbl">主菜一（限80份）</div><input class="fc" id="m-m1" placeholder="例：椒鹽豬柳"></div>
-              <div><div class="lbl">主菜二</div><input class="fc" id="m-m2" placeholder="例：酒釀雞腿"></div>
-              <div><div class="lbl">素食</div><input class="fc" id="m-veg" placeholder="例：紅燒豆皮結"></div>
-            </div>
-            <div style="font-size:13px;font-weight:700;color:#7c3aed;margin-bottom:8px;padding:6px 10px;background:#f5f3ff;border-radius:6px">🌙 晚餐</div>
-            <div style="display:grid;grid-template-columns:1fr 1fr 1fr 100px;gap:8px;margin-bottom:14px">
-              <div><div class="lbl">晚餐主菜一</div><input class="fc" id="m-dm1" placeholder="例：栗子燒肉"></div>
-              <div><div class="lbl">晚餐主菜二</div><input class="fc" id="m-dm2" placeholder="例：法式烤雞腿"></div>
-              <div><div class="lbl">晚餐素食</div><input class="fc" id="m-dveg" placeholder="例：素三寶"></div>
-              <div style="display:flex;align-items:flex-end"><button class="btn btn-g btn-full" onclick="addMenu()">新增並同步</button></div>
-            </div>
-          </div>
+        <div class="stat">
+          <div id="stLunch" class="stat-n">0</div>
+          <div class="stat-l">午餐</div>
         </div>
-        <div class="card">
-          <div class="card-hd">
-            <div class="card-title">Firebase 菜單列表（即時同步）</div>
-            <div style="display:flex;gap:8px;align-items:center">
-              <span style="font-size:12px;color:var(--g500)" id="menu-count-label"></span>
-              <button class="btn btn-r" onclick="clearAllMenus()">🗑️ 全部刪除</button>
-            </div>
-          </div>
-          <div class="card-bd" style="padding:0"><div class="tbl-wrap">
-            <table class="tbl"><thead><tr><th>日期</th><th>午餐主菜一</th><th>午餐主菜二</th><th>午餐素食</th><th>晚餐主菜一</th><th>晚餐主菜二</th><th>晚餐素食</th><th>操作</th></tr></thead>
-            <tbody id="menu-tbody"></tbody></table>
-          </div></div>
+
+        <div class="stat">
+          <div id="stDinner" class="stat-n">0</div>
+          <div class="stat-l">晚餐</div>
+        </div>
+
+        <div class="stat">
+          <div id="stPeople" class="stat-n">0</div>
+          <div class="stat-l">訂餐筆數</div>
         </div>
       </div>
 
-      <!-- ══ 復健部人員名單（super / rehab） ══ -->
-      <div id="sec-staff" class="sec">
-        <div class="page-title">👥 復健部人員名單</div>
-        <div class="page-sub">管理復健部實習學生資料（員編 / 姓名）</div>
-        <div class="card">
-          <div class="card-hd">
-            <div class="card-title">新增人員</div>
-            <label class="import-btn">📂 匯入 CSV<input type="file" accept=".csv" style="display:none" onchange="importStaffCSV(this)"></label>
-          </div>
-          <div class="card-bd">
-            <div class="row3">
-              <div><div class="lbl">員編</div><input class="fc" id="s-emp" placeholder="V08XXX" oninput="this.value=this.value.toUpperCase()"></div>
-              <div><div class="lbl">部門</div><input class="fc" id="s-dept" placeholder="例：骨科部"></div>
-              <div><div class="lbl">姓名</div><input class="fc" id="s-name" placeholder="姓名"></div>
-            </div>
-            <button class="btn btn-g" style="margin-top:10px" onclick="addStaff()">新增人員</button>
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-hd"><div class="card-title">人員列表</div><span class="badge bdg-a" id="staff-count"></span></div>
-          <div class="card-bd" style="padding:0"><div class="tbl-wrap">
-            <table class="tbl"><thead><tr><th>員編</th><th>部門</th><th>姓名</th><th>操作</th></tr></thead>
-            <tbody id="staff-tbody"></tbody></table>
-          </div></div>
+      <div class="card">
+        <div class="card-hd">訂餐明細｜社工室</div>
+
+        <div class="tbl-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>員編</th>
+                <th>姓名</th>
+                <th>日期</th>
+                <th>餐別</th>
+                <th>地點</th>
+                <th>主食</th>
+                <th>菜名</th>
+                <th>飯種</th>
+                <th>份數</th>
+                <th>狀態</th>
+              </tr>
+            </thead>
+            <tbody id="orderBody"></tbody>
+          </table>
         </div>
       </div>
 
-      <!-- ══ 社工室志工名單（super / social） ══ -->
-      <div id="sec-social-staff" class="sec">
-        <div class="page-title">🤝 社工室志工名單</div>
-        <div class="page-sub">管理社工室志工名單，志工以姓名直接登入</div>
-        <div class="card">
-          <div class="card-hd">
-            <div class="card-title">新增志工</div>
-            <label class="import-btn">📂 匯入 CSV<input type="file" accept=".csv" style="display:none" onchange="importVolunteerCSV(this)"></label>
-          </div>
-          <div class="card-bd">
-            <div class="row2">
-              <div><div class="lbl">姓名</div><input class="fc" id="vol-name" placeholder="例：王小明"></div>
-              <div><div class="lbl">備註（選填）</div><input class="fc" id="vol-note" placeholder="例：週一志工"></div>
-            </div>
-            <button class="btn btn-p" style="margin-top:10px" onclick="addVolunteer()">新增志工</button>
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-hd"><div class="card-title">志工名單</div><span class="badge bdg-p" id="vol-count"></span></div>
-          <div class="card-bd" style="padding:0"><div class="tbl-wrap">
-            <table class="tbl"><thead><tr><th>姓名</th><th>備註</th><th>操作</th></tr></thead>
-            <tbody id="vol-tbody"></tbody></table>
-          </div></div>
-        </div>
-      </div>
+    </section>
 
-      <!-- ══ 管理員設定（super only） ══ -->
-      <div id="sec-admins" class="sec">
-        <div class="page-title">🔐 管理員設定</div>
-        <div class="page-sub">設定各部門管理員帳號與角色</div>
-        <div class="card">
-          <div class="card-hd"><div class="card-title">新增管理員</div></div>
-          <div class="card-bd">
-            <div class="row2">
-              <div><div class="lbl">員編</div><input class="fc" id="a-emp" placeholder="Y00001" oninput="this.value=this.value.toUpperCase()"></div>
-              <div><div class="lbl">姓名</div><input class="fc" id="a-name" placeholder="姓名"></div>
-            </div>
-            <div class="row2" style="margin-top:10px">
-              <div><div class="lbl">部門</div><input class="fc" id="a-dept" placeholder="部門"></div>
-              <div><div class="lbl">角色</div>
-                <select class="fc" id="a-role">
-                  <option value="super">超級管理員（所有權限）</option>
-                  <option value="rehab">復健部管理員</option>
-                  <option value="social">社工室管理員</option>
-                </select>
-              </div>
-            </div>
-            <button class="btn btn-g" style="margin-top:10px" onclick="addAdmin()">新增管理員</button>
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-hd"><div class="card-title">管理員名冊</div></div>
-          <div class="card-bd" style="padding:0"><div class="tbl-wrap">
-            <table class="tbl"><thead><tr><th>員編</th><th>部門</th><th>姓名</th><th>角色</th><th>操作</th></tr></thead>
-            <tbody id="admins-tbody"></tbody></table>
-          </div></div>
-        </div>
-      </div>
 
-      <!-- ══ 修改密碼 ══ -->
-      <div id="sec-pwd" class="sec">
-        <div class="page-title">🔑 修改密碼</div>
-        <div class="page-sub">修改您的後台登入密碼</div>
-        <div class="card" style="max-width:420px">
-          <div class="card-hd"><div class="card-title">更新密碼</div></div>
-          <div class="card-bd fl">
-            <div><div class="lbl">目前密碼</div><input class="fc" type="password" id="pwd-old" placeholder="請輸入目前密碼"></div>
-            <div><div class="lbl">新密碼</div><input class="fc" type="password" id="pwd-new1" placeholder="請輸入新密碼（至少4碼）"></div>
-            <div><div class="lbl">確認新密碼</div><input class="fc" type="password" id="pwd-new2" placeholder="再次輸入新密碼"></div>
-            <div id="pwd-err"></div>
-            <button class="btn btn-g btn-full" onclick="changePwd()">✅ 儲存新密碼</button>
+    <!-- 菜單 -->
+    <section id="sec-menu" class="sec">
+
+      <div class="card">
+        <div class="card-hd">新增／修改每日菜單</div>
+
+        <div class="card-bd">
+          <div class="row">
+            <input id="menuDate" class="fc" type="date">
+            <input id="menuLunch1" class="fc" placeholder="午餐主菜一">
+            <input id="menuLunch2" class="fc" placeholder="午餐主菜二">
+            <input id="menuVeg" class="fc" placeholder="午餐素食">
+          </div>
+
+          <div class="row" style="margin-top:12px">
+            <input id="menuDinner1" class="fc" placeholder="晚餐主菜一">
+            <input id="menuDinner2" class="fc" placeholder="晚餐主菜二">
+            <input id="menuDinnerVeg" class="fc" placeholder="晚餐素食">
+
+            <button class="btn btn-g" onclick="saveMenu()">
+              儲存菜單
+            </button>
           </div>
         </div>
       </div>
 
-    </div>
-  </div>
+      <div class="card">
+        <div class="card-hd">已建立菜單</div>
+
+        <div class="tbl-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>日期</th>
+                <th>午餐主菜一</th>
+                <th>午餐主菜二</th>
+                <th>午餐素食</th>
+                <th>晚餐主菜一</th>
+                <th>晚餐主菜二</th>
+                <th>晚餐素食</th>
+              </tr>
+            </thead>
+            <tbody id="menuBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+    </section>
+
+
+    <!-- 志工 -->
+    <section id="sec-staff" class="sec">
+
+      <div class="card">
+        <div class="card-hd">新增社工室志工</div>
+
+        <div class="card-bd">
+          <div class="row">
+            <input id="staffEmp" class="fc"
+                   placeholder="員編"
+                   oninput="this.value=this.value.toUpperCase()">
+
+            <input id="staffName" class="fc" placeholder="姓名">
+
+            <button class="btn btn-g" onclick="addStaff()">
+              ＋ 新增志工
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-hd">
+          社工室志工名單
+          <span id="staffCount"></span>
+        </div>
+
+        <div class="tbl-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>員編</th>
+                <th>姓名</th>
+                <th>操作</th>
+              </tr>
+            </thead>
+            <tbody id="staffBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+    </section>
+
+
+    <!-- 管理員 -->
+    <section id="sec-admins" class="sec">
+
+      <div class="card">
+        <div class="card-hd">新增管理員</div>
+
+        <div class="card-bd">
+          <div class="row">
+            <input id="adminEmp" class="fc"
+                   placeholder="員編"
+                   oninput="this.value=this.value.toUpperCase()">
+
+            <input id="adminName" class="fc" placeholder="姓名">
+
+            <input id="adminPwd" class="fc"
+                   type="password"
+                   placeholder="密碼">
+
+            <select id="adminRole" class="fc">
+              <option value="social">社工室管理員</option>
+              <option value="super">超級管理員</option>
+            </select>
+
+            <button class="btn btn-g" onclick="addAdmin()">
+              ＋ 新增管理員
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-hd">管理員名冊</div>
+
+        <div class="tbl-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>員編</th>
+                <th>姓名</th>
+                <th>權限</th>
+                <th>操作</th>
+              </tr>
+            </thead>
+            <tbody id="adminBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+    </section>
+
+  </main>
 </div>
+
+<div id="toast" class="toast"></div>
+
 
 <script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
-import { getDatabase, ref, onValue, set, update, remove, get } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-database.js";
+
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
+
+import {
+  getDatabase,
+  ref,
+  onValue,
+  set,
+  remove
+}
+from "https://www.gstatic.com/firebasejs/11.10.0/firebase-database.js";
+
 
 const firebaseConfig = {
   apiKey: "AIzaSyCfDx9WW-yJYkKauGDy8QarsQKVWevo2b4",
   authDomain: "volunteer-order.firebaseapp.com",
-  databaseURL: "https://volunteer-order-default-rtdb.asia-southeast1.firebasedatabase.app",
   projectId: "volunteer-order",
   storageBucket: "volunteer-order.firebasestorage.app",
   messagingSenderId: "437088256984",
-  appId: "1:437088256984:web:1d5a55add78bfa8b8228ad"
+  appId: "1:437088256984:web:1d5a55add78bfa8b8228ad",
+  databaseURL: "https://volunteer-order-default-rtdb.firebaseio.com"
 };
+
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
-let DB = {menus:{},admins:{},staff:{},orders:{},social_staff:{}};
-let loggedAdmin = null;  // 含 role: super / rehab / social
-let importedMenus = null;
-let currentDeptTab = 'rehab';  // 訂餐統計目前顯示的分頁
 
-const $ = id=>document.getElementById(id);
-function dishLbl(d){return{main1:'午餐主菜一',main2:'午餐主菜二',veg:'午餐素食',dinnerMain1:'晚餐主菜一',dinnerMain2:'晚餐主菜二',dinnerVeg:'晚餐素食'}[d]||d}
-function dishName(d,menu){if(!menu)return dishLbl(d);return menu[d]||dishLbl(d);}
-function riceLbl(r){return r==='white'?'白飯':'養生飯'}
-function locLbl(l){return l==='douliou'?'斗六院區':'虎尾院區'}
-function fmtD(d){return d?d.replace(/-/g,'/'):''}
-function toast(msg,cls='tg'){const el=$('toast');el.textContent=msg;el.className='show '+cls;clearTimeout(el._t);el._t=setTimeout(()=>el.className='',2600)}
-function setErr(id,msg){const e=$(id);if(e)e.innerHTML=msg?`<div class="al al-r">${msg}</div>`:''}
+let DB = {
+  orders:{},
+  menus:{},
+  social_staff:{},
+  admins:{}
+};
 
-onValue(ref(db,'/'),snap=>{
-  DB=snap.val()||{menus:{},admins:{},staff:{},orders:{},social_staff:{}};
-  if(!DB.social_staff) DB.social_staff={};
-  const t=new Date().toLocaleTimeString('zh-TW',{hour:'2-digit',minute:'2-digit'});
-  if($('sync-time')) $('sync-time').textContent='同步：'+t;
-  if($('live-badge')) $('live-badge').textContent='已同步 '+t;
-  if(loggedAdmin) renderAll();
+let loggedAdmin = null;
+
+const $ = id => document.getElementById(id);
+
+function today(){
+  const d=new Date();
+  const y=d.getFullYear();
+  const m=String(d.getMonth()+1).padStart(2,"0");
+  const day=String(d.getDate()).padStart(2,"0");
+  return `${y}-${m}-${day}`;
+}
+
+$("orderDate").value=today();
+$("menuDate").value=today();
+
+
+/* Firebase 即時同步 */
+
+onValue(ref(db,"orders"),s=>{
+  DB.orders=s.val()||{};
+  if(loggedAdmin) renderOrders();
 });
 
-/* ── Auth ── */
-function doAdminLogin(){
-  const emp=$('adm-emp').value.trim().toUpperCase();
-  const pwd=$('adm-pwd').value.trim();
-  const admins=DB.admins||{};
-  const adm=admins[emp];
-  if(!adm){setErr('login-err','⚠️ 查無此員編');return;}
-  // 密碼驗證：有儲存 pwd 欄位就用 pwd，否則預設員編（大寫）
-  const storedPwd = adm.pwd || emp;
-  if(pwd!==storedPwd && pwd.toUpperCase()!==storedPwd){
-    setErr('login-err','⚠️ 密碼錯誤');return;
+onValue(ref(db,"menus"),s=>{
+  DB.menus=s.val()||{};
+  if(loggedAdmin) renderMenus();
+});
+
+onValue(ref(db,"social_staff"),s=>{
+  DB.social_staff=s.val()||{};
+  if(loggedAdmin) renderStaff();
+});
+
+onValue(ref(db,"admins"),s=>{
+  DB.admins=s.val()||{};
+  if(loggedAdmin) renderAdmins();
+});
+
+
+/* 登入 */
+
+window.login=function(){
+
+  const emp=$("loginEmp").value.trim().toUpperCase();
+  const pwd=$("loginPwd").value;
+
+  $("loginErr").textContent="";
+
+  if(!emp || !pwd){
+    $("loginErr").textContent="請輸入員編及密碼";
+    return;
   }
-  loggedAdmin=adm;
-  $('login-screen').style.display='none';
-  $('admin-layout').style.display='flex';
-  $('sb-user-info').innerHTML=`${adm.name}<br>${adm.emp}<br><span class="sb-dept-badge ${adm.role==='social'?'sb-dept-social':'sb-dept-rehab'}">${roleLabel(adm.role)}</span>`;
-  $('ord-date').value=new Date().toISOString().slice(0,10);
-  applyRoleUI();
-  renderAll();
-  toast('歡迎，'+adm.name+'！','tg');
-}
 
-function roleLabel(r){
-  return {super:'超級管理員',rehab:'復健部管理員',social:'社工室管理員'}[r]||r;
-}
+  const a=(DB.admins||{})[emp];
 
-/* 依角色顯示/隱藏選單與分頁 */
-function applyRoleUI(){
-  const role=loggedAdmin.role;
-  // 菜單管理：只有 super 可見
-  const sbMenu=$('sb-menu');
-  const sbAdmins=$('sb-admins');
-  if(sbMenu) sbMenu.style.display=role==='super'?'flex':'none';
-  if(sbAdmins) sbAdmins.style.display=role==='super'?'flex':'none';
-  // 復健部人員：super / rehab 可見
-  const sbRehab=$('sb-rehab-staff');
-  if(sbRehab) sbRehab.style.display=(role==='super'||role==='rehab')?'flex':'none';
-  // 社工室志工：super / social 可見
-  const sbSocial=$('sb-social-staff');
-  if(sbSocial) sbSocial.style.display=(role==='super'||role==='social')?'flex':'none';
-  // 訂餐統計分頁：social 預設跳到社工室分頁，rehab 顯示復健部分頁
-  // super 顯示雙分頁
-  const tabsWrap=$('dept-tabs-wrap');
-  if(role==='rehab'){
-    // 只顯示復健部
-    if(tabsWrap) tabsWrap.style.display='none';
-    switchDeptTab('rehab');
-  } else if(role==='social'){
-    // 只顯示社工室
-    if(tabsWrap) tabsWrap.style.display='none';
-    switchDeptTab('social');
-  } else {
-    // super：顯示雙分頁
-    if(tabsWrap) tabsWrap.style.display='flex';
-    switchDeptTab('rehab');
+  if(!a){
+    $("loginErr").textContent="查無此管理員";
+    return;
   }
-}
 
-function doLogout(){
-  loggedAdmin=null;
-  $('login-screen').style.display='flex';
-  $('admin-layout').style.display='none';
-  $('adm-emp').value='';$('adm-pwd').value='';setErr('login-err','');
-}
+  const savedPwd=String(a.pwd ?? a.password ?? "");
 
-function showSec(btn){
-  document.querySelectorAll('.sb-item').forEach(b=>b.classList.remove('on'));
-  btn.classList.add('on');
-  if(btn.classList.contains('social-item')) btn.classList.add('social-item');
-  const secId=btn.dataset.sec;
-  if(!secId) return;
-  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('on'));
-  $(secId)&&$(secId).classList.add('on');
-  const titles={
-    'sec-orders':'📋 訂餐統計',
-    'sec-menu':'📝 菜單管理（超級管理員）',
-    'sec-staff':'👥 復健部人員名單',
-    'sec-social-staff':'🤝 社工室志工名單',
-    'sec-admins':'🔐 管理員設定',
-    'sec-pwd':'🔑 修改密碼'
+  if(savedPwd!==pwd){
+    $("loginErr").textContent="密碼錯誤";
+    return;
+  }
+
+  loggedAdmin={
+    emp,
+    name:a.name||emp,
+    role:a.role||"social"
   };
-  $('topbar-section-title').textContent=titles[secId]||'';
+
+  $("loginScreen").style.display="none";
+  $("layout").style.display="flex";
+
+  $("userInfo").innerHTML=
+    `👤 ${loggedAdmin.name}<br>${emp}<br>`+
+    (loggedAdmin.role==="super"?"超級管理員":"社工室管理員");
+
+  $("adminBtn").style.display=
+    loggedAdmin.role==="super" ? "block" : "none";
+
+  renderAll();
+  toast("登入成功");
+};
+
+
+window.logout=function(){
+  loggedAdmin=null;
+  $("layout").style.display="none";
+  $("loginScreen").style.display="flex";
+  $("loginPwd").value="";
+};
+
+
+/* 分頁 */
+
+window.showSec=function(name,btn){
+
+  document.querySelectorAll(".sec")
+    .forEach(x=>x.classList.remove("on"));
+
+  $("sec-"+name).classList.add("on");
+
+  document.querySelectorAll(".sb-btn")
+    .forEach(x=>x.classList.remove("on"));
+
+  if(btn) btn.classList.add("on");
+
+  const titles={
+    orders:"📋 訂餐統計",
+    menu:"📝 菜單管理",
+    staff:"🤝 社工室志工名單",
+    admins:"🔐 管理員設定"
+  };
+
+  $("pageTitle").textContent=titles[name]||"院餐訂餐系統";
+};
+
+
+/* 訂餐 */
+
+window.renderOrders=function(){
+
+  const date=$("orderDate").value;
+
+  let orders=Object.values(DB.orders||{})
+    .filter(o=>o && o.date===date);
+
+  /*
+    舊資料可能沒有 deptType。
+    social 代表社工室。
+  */
+  const social=orders.filter(o=>
+    !o.deptType ||
+    o.deptType==="social" ||
+    o.department==="社工室" ||
+    o.dept==="社工室"
+  );
+
+  let total=0,lunch=0,dinner=0;
+
+  social.forEach(o=>{
+    const q=Number(o.qty||1);
+    total+=q;
+
+    if(o.mealType==="lunch" || o.meal==="午餐") lunch+=q;
+    if(o.mealType==="dinner" || o.meal==="晚餐") dinner+=q;
+  });
+
+  $("stTotal").textContent=total;
+  $("stLunch").textContent=lunch;
+  $("stDinner").textContent=dinner;
+  $("stPeople").textContent=social.length;
+
+  if(!social.length){
+    $("orderBody").innerHTML=
+      `<tr><td colspan="10" class="no-data">本日尚無訂餐資料</td></tr>`;
+    return;
+  }
+
+  $("orderBody").innerHTML=social.map(o=>`
+
+    <tr>
+      <td>${esc(o.emp||o.id||"")}</td>
+      <td>${esc(o.name||"")}</td>
+      <td>${esc(o.date||"")}</td>
+      <td>${mealLabel(o)}</td>
+      <td>${esc(o.location||o.place||"")}</td>
+      <td>${esc(o.dish||o.main||o.mainDish||"")}</td>
+      <td>${esc(o.dishName||o.menuName||"")}</td>
+      <td>${riceLabel(o.rice)}</td>
+      <td>${Number(o.qty||1)}</td>
+      <td>${statusLabel(o.status)}</td>
+    </tr>
+
+  `).join("");
+};
+
+
+function mealLabel(o){
+  if(o.mealType==="lunch") return "午餐";
+  if(o.mealType==="dinner") return "晚餐";
+  return esc(o.meal||o.mealType||"");
 }
 
-function switchDeptTab(dept){
-  currentDeptTab=dept;
-  ['rehab','social'].forEach(d=>{
-    const tab=$('tab-'+d);
-    const panel=$('panel-'+d);
-    if(tab){tab.className='dept-tab '+d+(d===dept?' on':'');}
-    if(panel){panel.className='dept-panel'+(d===dept?' on':'');}
-  });
+function riceLabel(r){
+  if(r==="white") return "白飯";
+  if(r==="healthy") return "養生飯";
+  return esc(r||"");
 }
+
+function statusLabel(s){
+  if(s==="done") return "已領餐";
+  if(s==="cancel") return "已取消";
+  if(!s || s==="ordered") return "已訂餐";
+  return esc(s);
+}
+
+
+/* CSV */
+
+window.exportCSV=function(){
+
+  const date=$("orderDate").value;
+
+  const orders=Object.values(DB.orders||{})
+    .filter(o=>
+      o &&
+      o.date===date &&
+      (
+        !o.deptType ||
+        o.deptType==="social" ||
+        o.department==="社工室" ||
+        o.dept==="社工室"
+      )
+    );
+
+  const rows=[
+    ["員編","姓名","日期","餐別","地點","主食","菜名","飯種","份數","狀態"]
+  ];
+
+  orders.forEach(o=>{
+    rows.push([
+      o.emp||o.id||"",
+      o.name||"",
+      o.date||"",
+      mealLabel(o),
+      o.location||o.place||"",
+      o.dish||o.main||o.mainDish||"",
+      o.dishName||o.menuName||"",
+      riceLabel(o.rice),
+      o.qty||1,
+      statusLabel(o.status)
+    ]);
+  });
+
+  const csv="\ufeff"+rows.map(row=>
+    row.map(v=>`"${String(v).replace(/"/g,'""')}"`).join(",")
+  ).join("\n");
+
+  const blob=new Blob([csv],{
+    type:"text/csv;charset=utf-8"
+  });
+
+  const a=document.createElement("a");
+  a.href=URL.createObjectURL(blob);
+  a.download=`社工室訂餐統計_${date}.csv`;
+  a.click();
+
+  URL.revokeObjectURL(a.href);
+};
+
+
+/* 菜單 */
+
+window.saveMenu=async function(){
+
+  const date=$("menuDate").value;
+
+  if(!date){
+    toast("請選擇日期");
+    return;
+  }
+
+  const data={
+    main1:$("menuLunch1").value.trim(),
+    main2:$("menuLunch2").value.trim(),
+    veg:$("menuVeg").value.trim(),
+    dinnerMain1:$("menuDinner1").value.trim(),
+    dinnerMain2:$("menuDinner2").value.trim(),
+    dinnerVeg:$("menuDinnerVeg").value.trim()
+  };
+
+  try{
+    await set(ref(db,"menus/"+date),data);
+    toast("菜單已儲存");
+  }catch(e){
+    toast("儲存失敗："+e.message);
+  }
+};
+
+
+function renderMenus(){
+
+  const menus=DB.menus||{};
+  const dates=Object.keys(menus).sort().reverse();
+
+  if(!dates.length){
+    $("menuBody").innerHTML=
+      `<tr><td colspan="7" class="no-data">尚未建立菜單</td></tr>`;
+    return;
+  }
+
+  $("menuBody").innerHTML=dates.map(date=>{
+
+    const m=menus[date]||{};
+
+    return `
+      <tr>
+        <td>${esc(date)}</td>
+        <td>${esc(m.main1||"")}</td>
+        <td>${esc(m.main2||"")}</td>
+        <td>${esc(m.veg||"")}</td>
+        <td>${esc(m.dinnerMain1||"")}</td>
+        <td>${esc(m.dinnerMain2||"")}</td>
+        <td>${esc(m.dinnerVeg||"")}</td>
+      </tr>
+    `;
+
+  }).join("");
+}
+
+
+/* 社工室志工 */
+
+window.addStaff=async function(){
+
+  const emp=$("staffEmp").value.trim().toUpperCase();
+  const name=$("staffName").value.trim();
+
+  if(!emp || !name){
+    toast("請填寫員編及姓名");
+    return;
+  }
+
+  if((DB.social_staff||{})[emp]){
+    toast("此員編已存在");
+    return;
+  }
+
+  try{
+
+    await set(ref(db,"social_staff/"+emp),{
+      emp,
+      name,
+      dept:"社工室"
+    });
+
+    $("staffEmp").value="";
+    $("staffName").value="";
+
+    toast("志工已新增");
+
+  }catch(e){
+    toast("新增失敗："+e.message);
+  }
+};
+
+
+function renderStaff(){
+
+  const staff=DB.social_staff||{};
+  const keys=Object.keys(staff).sort();
+
+  $("staffCount").textContent=`（${keys.length} 人）`;
+
+  if(!keys.length){
+    $("staffBody").innerHTML=
+      `<tr><td colspan="3" class="no-data">尚無志工資料</td></tr>`;
+    return;
+  }
+
+  $("staffBody").innerHTML=keys.map(emp=>{
+
+    const s=staff[emp]||{};
+
+    return `
+      <tr>
+        <td>${esc(s.emp||emp)}</td>
+        <td>${esc(s.name||"")}</td>
+        <td>
+          <button class="btn btn-r"
+            onclick="deleteStaff('${js(emp)}')">
+            刪除
+          </button>
+        </td>
+      </tr>
+    `;
+
+  }).join("");
+}
+
+
+window.deleteStaff=async function(emp){
+
+  if(!confirm(`確定要刪除 ${emp} 嗎？`)) return;
+
+  try{
+    await remove(ref(db,"social_staff/"+emp));
+    toast("已刪除");
+  }catch(e){
+    toast("刪除失敗："+e.message);
+  }
+};
+
+
+/* 管理員 */
+
+window.addAdmin=async function(){
+
+  if(!loggedAdmin || loggedAdmin.role!=="super"){
+    toast("只有超級管理員可以新增管理員");
+    return;
+  }
+
+  const emp=$("adminEmp").value.trim().toUpperCase();
+  const name=$("adminName").value.trim();
+  const pwd=$("adminPwd").value;
+  const role=$("adminRole").value;
+
+  if(!emp || !name || !pwd){
+    toast("請填寫完整資料");
+    return;
+  }
+
+  if((DB.admins||{})[emp]){
+    toast("此員編已存在");
+    return;
+  }
+
+  try{
+
+    await set(ref(db,"admins/"+emp),{
+      emp,
+      name,
+      pwd,
+      role,
+      dept:"社工室"
+    });
+
+    $("adminEmp").value="";
+    $("adminName").value="";
+    $("adminPwd").value="";
+
+    toast("管理員已新增");
+
+  }catch(e){
+    toast("新增失敗："+e.message);
+  }
+};
+
+
+function renderAdmins(){
+
+  if(!loggedAdmin || loggedAdmin.role!=="super") return;
+
+  const admins=DB.admins||{};
+  const keys=Object.keys(admins).sort();
+
+  if(!keys.length){
+    $("adminBody").innerHTML=
+      `<tr><td colspan="4" class="no-data">尚無管理員</td></tr>`;
+    return;
+  }
+
+  $("adminBody").innerHTML=keys.map(emp=>{
+
+    const a=admins[emp]||{};
+
+    return `
+      <tr>
+        <td>${esc(a.emp||emp)}</td>
+        <td>${esc(a.name||"")}</td>
+        <td>
+          ${a.role==="super"?"超級管理員":"社工室管理員"}
+        </td>
+        <td>
+          ${
+            emp===loggedAdmin.emp
+            ? "目前登入"
+            : `<button class="btn btn-r"
+                 onclick="deleteAdmin('${js(emp)}')">
+                 刪除
+               </button>`
+          }
+        </td>
+      </tr>
+    `;
+
+  }).join("");
+}
+
+
+window.deleteAdmin=async function(emp){
+
+  if(!loggedAdmin || loggedAdmin.role!=="super") return;
+
+  if(!confirm(`確定刪除管理員 ${emp}？`)) return;
+
+  try{
+    await remove(ref(db,"admins/"+emp));
+    toast("管理員已刪除");
+  }catch(e){
+    toast("刪除失敗："+e.message);
+  }
+};
+
+
+/* 共用 */
 
 function renderAll(){
-  if(!loggedAdmin) return;
-  renderOrders(); renderMenuTable(); renderStaffTable(); renderVolTable(); renderAdminsTable();
+  renderOrders();
+  renderMenus();
+  renderStaff();
+  renderAdmins();
 }
 
-/* ── Orders（依部門分組） ── */
-function renderOrders(){
-  const dateStr=$('ord-date').value||new Date().toISOString().slice(0,10);
-  const allOrds=Object.values(DB.orders||{}).filter(o=>o.date===dateStr);
-  const menu=(DB.menus||{})[dateStr];
-
-  // 復健部：deptType==='rehab' 或無 deptType（舊資料相容）
-  const rehabOrds=allOrds.filter(o=>o.deptType==='rehab'||!o.deptType);
-  // 社工室：deptType==='social'
-  const socialOrds=allOrds.filter(o=>o.deptType==='social');
-
-  renderDeptOrders('rehab', rehabOrds, menu);
-  renderDeptOrders('social', socialOrds, menu);
+function esc(v){
+  return String(v??"")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;");
 }
 
-function renderDeptOrders(dept, ords, menu){
-  const total=ords.reduce((s,o)=>s+o.qty,0);
-  const done=ords.filter(o=>o.status==='done').reduce((s,o)=>s+o.qty,0);
-  const people=new Set(ords.map(o=>o.emp)).size;
-  const statColor=dept==='social'?'c-p':'c-g';
-
-  $('ord-stats-'+dept).innerHTML=`
-    <div class="stat"><div class="stat-lbl">總訂份數</div><div class="stat-val">${total}</div></div>
-    <div class="stat"><div class="stat-lbl">已領取</div><div class="stat-val ${statColor}">${done}</div></div>
-    <div class="stat"><div class="stat-lbl">未領取</div><div class="stat-val c-r">${total-done}</div></div>
-    <div class="stat"><div class="stat-lbl">訂餐人數</div><div class="stat-val c-a">${people}</div></div>`;
-
-  const DISH_KEYS=['main1','main2','veg','dinnerMain1','dinnerMain2','dinnerVeg'];
-  let sb='';
-  DISH_KEYS.forEach(dk=>{
-    ['white','health'].forEach(r=>{
-      const rows=ords.filter(o=>o.dish===dk&&o.rice===r);
-      const t=rows.reduce((s,o)=>s+o.qty,0); if(!t) return;
-      const dn=rows.filter(o=>o.status==='done').reduce((s,o)=>s+o.qty,0);
-      let nm=(menu&&menu[dk])||rows[0]?.dishName||dishName(dk,menu)||dishLbl(dk);
-      while(/(＋白飯|＋養生飯)$/.test(nm)) nm=nm.replace(/＋(白飯|養生飯)$/,'');
-      if(nm.includes('：')) nm=nm.split('：').slice(-1)[0];
-      nm=nm.trim();
-      sb+=`<tr><td>${dishLbl(dk)}</td><td style="font-weight:600">${nm}</td><td>${riceLbl(r)}</td>
-        <td style="text-align:center">${t}</td>
-        <td style="text-align:center;color:var(--pri-l);font-weight:600">${dn}</td>
-        <td style="text-align:center;color:${t-dn>0?'var(--red)':'inherit'};font-weight:${t-dn>0?'700':'400'}">${t-dn}</td></tr>`;
-    });
-  });
-  $('sum-tbody-'+dept).innerHTML=sb||`<tr><td colspan="6" class="no-data">此日期無訂單</td></tr>`;
-
-  let ob='';
-  ords.forEach(o=>{
-    let nm=(menu&&menu[o.dish])||o.dishName||dishName(o.dish,menu)||dishLbl(o.dish);
-    while(/(＋白飯|＋養生飯)$/.test(nm)) nm=nm.replace(/＋(白飯|養生飯)$/,'');
-    if(nm.includes('：')) nm=nm.split('：').slice(-1)[0];
-    nm=nm.trim();
-    ob+=`<tr>
-      <td>${o.emp}</td><td>${o.name}</td><td>${o.dept}</td>
-      <td>${fmtD(o.date)}</td><td>${o.mealType==='lunch'?'午餐':'晚餐'}</td>
-      <td>${locLbl(o.loc)}</td><td>${dishLbl(o.dish)}</td>
-      <td style="font-weight:600">${nm}</td><td>${riceLbl(o.rice)}</td>
-      <td style="text-align:center">${o.qty}</td>
-      <td><span class="badge ${o.status==='done'?'bdg-g':'bdg-a'}">${o.status==='done'?'已領取':'待領取'}</span></td>
-      <td><div class="acts">
-        <button class="btn ${o.status==='done'?'btn-o':'btn-g'}" onclick="toggleOrd('${o.id}')">${o.status==='done'?'取消':'標記領取'}</button>
-        <button class="btn btn-r" onclick="delOrd('${o.id}')">刪</button>
-      </div></td></tr>`;
-  });
-  $('ord-tbody-'+dept).innerHTML=ob||`<tr><td colspan="12" class="no-data">此日期無訂單</td></tr>`;
+function js(v){
+  return String(v??"")
+    .replace(/\\/g,"\\\\")
+    .replace(/'/g,"\\'");
 }
 
-async function toggleOrd(id){
-  const o=(DB.orders||{})[id];if(!o)return;
-  await update(ref(db,'/'),{['orders/'+id+'/status']:o.status==='done'?'pending':'done'});
-  toast('狀態已更新','tg');
-}
-async function delOrd(id){
-  if(!confirm('確定刪除此訂單？'))return;
-  await remove(ref(db,'orders/'+id));toast('已刪除','tg');
-}
-function exportOrders(){
-  const dateStr=$('ord-date').value;
-  const allOrds=Object.values(DB.orders||{}).filter(o=>o.date===dateStr);
-  const menu=DB.menus&&DB.menus[dateStr];
-  // 依角色過濾
-  let ords=allOrds;
-  if(loggedAdmin.role==='rehab') ords=allOrds.filter(o=>o.deptType==='rehab'||!o.deptType);
-  if(loggedAdmin.role==='social') ords=allOrds.filter(o=>o.deptType==='social');
-  const rows=[['員編/ID','姓名','部門','部門類別','日期','餐別','地點','主食','菜名','飯種','份數','狀態']];
-  ords.forEach(o=>{rows.push([o.emp,o.name,o.dept,o.deptType==='social'?'社工室':'復健部',o.date,o.mealType==='lunch'?'午餐':'晚餐',locLbl(o.loc),dishLbl(o.dish),menu?menu[o.dish]||o.dish:o.dish,riceLbl(o.rice),o.qty,o.status==='done'?'已領取':'待領取']);});
-  const csv=rows.map(r=>r.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(',')).join('\n');
-  const blob=new Blob(['﻿'+csv],{type:'text/csv;charset=utf-8'});
-  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`訂餐統計_${dateStr}.csv`;a.click();
-  toast('已匯出','tg');
+function toast(msg){
+
+  const t=$("toast");
+
+  t.textContent=msg;
+  t.style.display="block";
+
+  clearTimeout(window.__toastTimer);
+
+  window.__toastTimer=setTimeout(()=>{
+    t.style.display="none";
+  },2500);
 }
 
-/* ── Menu（super only） ── */
-function renderMenuTable(){
-  if(!loggedAdmin||loggedAdmin.role!=='super') return;
-  const menus=DB.menus||{};
-  const keys=Object.keys(menus).sort();
-  const countEl=$('menu-count-label');
-  if(countEl) countEl.textContent='共 '+keys.length+' 筆';
-  if(!keys.length){$('menu-tbody').innerHTML='<tr><td colspan="8" class="no-data">尚無菜單，請新增或匯入 CSV</td></tr>';return;}
-  const today=new Date().toISOString().slice(0,10);
-  $('menu-tbody').innerHTML=keys.map(d=>{
-    const m=menus[d];const isPast=d<today;
-    return `<tr style="${isPast?'opacity:.5':''}">
-      <td><b>${fmtD(d)}</b>${isPast?'<small style="color:var(--g400);margin-left:4px">過期</small>':''}</td>
-      <td>${m.main1||'—'}</td><td>${m.main2||'—'}</td><td>${m.veg||'—'}</td>
-      <td>${m.dinnerMain1||m.dinner||'—'}</td><td>${m.dinnerMain2||'—'}</td><td>${m.dinnerVeg||'—'}</td>
-      <td><button class="btn btn-r" onclick="delMenu('${d}')">刪除</button></td></tr>`;
-  }).join('');
-}
-async function addMenu(){
-  const date=$('m-date').value,m1=$('m-m1').value.trim(),m2=$('m-m2').value.trim(),veg=$('m-veg').value.trim();
-  const dm1=$('m-dm1').value.trim(),dm2=$('m-dm2').value.trim(),dveg=$('m-dveg').value.trim();
-  if(!date||!m1||!m2||!veg){toast('請填寫日期及午餐三種主菜','tr');return;}
-  try{
-    await set(ref(db,'menus/'+date),{main1:m1,main2:m2,veg,main1Limit:80,holiday:false,dinnerMain1:dm1,dinnerMain2:dm2,dinnerVeg:dveg});
-    toast('✅ 菜單已寫入 Firebase！','tg');
-    ['m-date','m-m1','m-m2','m-veg','m-dm1','m-dm2','m-dveg'].forEach(id=>{const e=$(id);if(e)e.value='';});
-  }catch(err){toast('❌ 寫入失敗：'+err.message,'tr');}
-}
-async function delMenu(date){if(!confirm('確定刪除 '+fmtD(date)+' 的菜單？'))return;await remove(ref(db,'menus/'+date));toast('已刪除','tg');}
-async function clearAllMenus(){if(!confirm('確定刪除全部菜單？此操作會清空 Firebase 中所有菜單'))return;await set(ref(db,'menus'),{});toast('已清空所有菜單','tg');}
-
-function importMenuCSV(input){
-  const file=input.files[0];if(!file)return;
-  const statusEl=$('import-status');
-  const reader=new FileReader();
-  reader.onload=e=>{
-    const text=e.target.result;
-    const lines=text.split('\n').map(l=>l.trim()).filter(Boolean);
-    importedMenus={};let count=0;
-    lines.forEach((line,idx)=>{
-      if(idx===0&&(line.includes('日期')||line.includes('date')||line.includes('主菜')))return;
-      const cols=line.split(/,(?=(?:[^"]*"[^"]*")*[^"]*$)/).map(c=>c.replace(/^"|"$/g,'').trim());
-      if(cols.length<4)return;
-      const rawDate=cols[0]||'';
-      const m1=cols[1]||'',m2=cols[2]||'',veg=cols[3]||'';
-      const dm1=cols[4]||'',dm2=cols[5]||'',dveg=cols[6]||'';
-      if(!rawDate||!m1)return;
-      let dateKey=rawDate.replace(/\//g,'-').replace(/年/g,'-').replace(/月/g,'-').replace(/日/g,'').trim();
-      if(/^\d{1,2}-\d{1,2}$/.test(dateKey)){const yr=new Date().getFullYear();const parts=dateKey.split('-');dateKey=`${yr}-${parts[0].padStart(2,'0')}-${parts[1].padStart(2,'0')}`;}
-      if(!/^\d{4}-\d{2}-\d{2}$/.test(dateKey))return;
-      importedMenus[dateKey]={main1:m1,main2:m2,veg,main1Limit:80,holiday:false,dinnerMain1:dm1,dinnerMain2:dm2,dinnerVeg:dveg};
-      count++;
-    });
-    if(statusEl) statusEl.textContent='✅ 已讀取 '+count+' 筆，請點「寫入 Firebase」';
-    toast('已讀取 '+count+' 筆菜單','tg');
-  };
-  reader.readAsText(file,'UTF-8');input.value='';
-}
-async function saveImportedMenus(){
-  if(!importedMenus||Object.keys(importedMenus).length===0){toast('請先選擇 CSV 檔案','tr');return;}
-  const statusEl=$('import-status');
-  if(statusEl) statusEl.textContent='寫入中...';
-  try{
-    const updates={};
-    Object.entries(importedMenus).forEach(([d,m])=>{updates['menus/'+d]=m;});
-    await update(ref(db,'/'),updates);
-    const count=Object.keys(importedMenus).length;
-    if(statusEl) statusEl.textContent='✅ 已成功寫入 '+count+' 筆！';
-    toast('✅ 已寫入 Firebase '+count+' 筆！','tg');
-    importedMenus=null;
-  }catch(err){if(statusEl) statusEl.textContent='❌ 寫入失敗：'+err.message;toast('❌ 寫入失敗','tr');}
-}
-
-/* ── 復健部人員 ── */
-function renderStaffTable(){
-  const staff=DB.staff||{};const keys=Object.keys(staff);
-  $('staff-count').textContent=keys.length+' 人';
-  if(!keys.length){$('staff-tbody').innerHTML='<tr><td colspan="4" class="no-data">尚無人員</td></tr>';return;}
-  $('staff-tbody').innerHTML=keys.map(emp=>{const s=staff[emp];return`<tr><td>${s.emp}</td><td>${s.dept}</td><td>${s.name}</td><td><button class="btn btn-r" onclick="delStaff('${emp}')">刪除</button></td></tr>`;}).join('');
-}
-async function addStaff(){
-  const emp=$('s-emp').value.trim().toUpperCase(),dept=$('s-dept').value.trim(),name=$('s-name').value.trim();
-  if(!emp||!name){toast('請填寫員編及姓名','tr');return;}
-  if((DB.staff||{})[emp]){toast('此員編已存在','tr');return;}
-  await set(ref(db,'staff/'+emp),{emp,dept,name});
-  toast('人員新增成功','tg');
-  ['s-emp','s-dept','s-name'].forEach(id=>{const e=$(id);if(e)e.value='';});
-}
-async function delStaff(emp){await remove(ref(db,'staff/'+emp));toast('已刪除','tg');}
-function importStaffCSV(input){
-  const file=input.files[0];if(!file)return;
-  const reader=new FileReader();
-  reader.onload=async e=>{
-    const lines=e.target.result.split('\n').map(l=>l.trim()).filter(Boolean);
-    const updates={};let count=0;
-    lines.slice(1).forEach(line=>{
-      const cols=line.split(',').map(c=>c.replace(/^"|"$/g,'').trim());
-      if(cols.length<3)return;
-      const [emp,dept,name]=cols;if(!emp||emp==='員編')return;
-      updates['staff/'+emp.toUpperCase()]={emp:emp.toUpperCase(),dept,name};count++;
-    });
-    await update(ref(db,'/'),updates);
-    toast('已匯入 '+count+' 筆人員','tg');
-  };
-  reader.readAsText(file,'UTF-8');input.value='';
-}
-
-/* ── 社工室志工 ── */
-function renderVolTable(){
-  const vols=DB.social_staff||{};const keys=Object.keys(vols);
-  const countEl=$('vol-count'); if(countEl) countEl.textContent=keys.length+' 人';
-  const tbody=$('vol-tbody'); if(!tbody) return;
-  if(!keys.length){tbody.innerHTML='<tr><td colspan="3" class="no-data">尚無志工，請新增</td></tr>';return;}
-  tbody.innerHTML=keys.map(k=>{const v=vols[k];return`<tr><td>${v.name}</td><td>${v.note||'—'}</td><td><button class="btn btn-r" onclick="delVolunteer('${k}')">刪除</button></td></tr>`;}).join('');
-}
-async function addVolunteer(){
-  const name=$('vol-name').value.trim(),note=$('vol-note').value.trim();
-  if(!name){toast('請填寫志工姓名','tr');return;}
-  // 檢查重名
-  const existing=Object.values(DB.social_staff||{}).find(v=>v.name===name);
-  if(existing){toast('此姓名已存在','tr');return;}
-  const id='vol_'+Date.now();
-  await set(ref(db,'social_staff/'+id),{id,name,note});
-  toast('志工新增成功','tg');
-  ['vol-name','vol-note'].forEach(i=>{const e=$(i);if(e)e.value='';});
-}
-async function delVolunteer(id){
-  if(!confirm('確定刪除此志工？'))return;
-  await remove(ref(db,'social_staff/'+id));toast('已刪除','tg');
-}
-function importVolunteerCSV(input){
-  const file=input.files[0];if(!file)return;
-  const reader=new FileReader();
-  reader.onload=async e=>{
-    const lines=e.target.result.split('\n').map(l=>l.trim()).filter(Boolean);
-    const updates={};let count=0;
-    lines.slice(1).forEach(line=>{
-      const cols=line.split(',').map(c=>c.replace(/^"|"$/g,'').trim());
-      if(!cols[0]||cols[0]==='姓名')return;
-      const [name,note='']=cols;
-      const id='vol_'+Date.now()+'_'+Math.random().toString(36).slice(2,5);
-      updates['social_staff/'+id]={id,name,note};count++;
-    });
-    await update(ref(db,'/'),updates);
-    toast('已匯入 '+count+' 位志工','tg');
-  };
-  reader.readAsText(file,'UTF-8');input.value='';
-}
-
-/* ── 管理員（super only） ── */
-function renderAdminsTable(){
-  if(!loggedAdmin||loggedAdmin.role!=='super') return;
-  const admins=DB.admins||{};
-  const roleLabels={super:'超級管理員',rehab:'復健部管理員',social:'社工室管理員'};
-  const roleBadge={super:'bdg-b',rehab:'bdg-g',social:'bdg-p'};
-  $('admins-tbody').innerHTML=Object.values(admins).map(a=>`
-    <tr><td>${a.emp}</td><td>${a.dept}</td><td>${a.name}</td>
-    <td><span class="badge ${roleBadge[a.role]||'bdg-a'}">${roleLabels[a.role]||a.role}</span></td>
-    <td><button class="btn btn-r" onclick="delAdmin('${a.emp}')" ${a.emp==='Y00780'?'disabled':''}>刪除</button></td></tr>`).join('');
-}
-async function addAdmin(){
-  const emp=$('a-emp').value.trim().toUpperCase(),name=$('a-name').value.trim(),dept=$('a-dept').value.trim(),role=$('a-role').value;
-  if(!emp||!name){toast('請填寫員編及姓名','tr');return;}
-  if((DB.admins||{})[emp]){toast('此員編已存在','tr');return;}
-  await set(ref(db,'admins/'+emp),{emp,name,dept,role});
-  toast('管理員新增成功','tg');
-  ['a-emp','a-name','a-dept'].forEach(id=>{const e=$(id);if(e)e.value='';});
-}
-async function delAdmin(emp){if(!confirm('確定移除此管理員？'))return;await remove(ref(db,'admins/'+emp));toast('已移除','tg');}
-
-/* ── 修改密碼 ── */
-async function changePwd(){
-  const oldPwd=$('pwd-old').value.trim();
-  const newPwd1=$('pwd-new1').value.trim();
-  const newPwd2=$('pwd-new2').value.trim();
-  setErr('pwd-err','');
-  const storedPwd=loggedAdmin.pwd||loggedAdmin.emp;
-  if(oldPwd!==storedPwd&&oldPwd.toUpperCase()!==storedPwd){
-    setErr('pwd-err','⚠️ 目前密碼錯誤');return;
-  }
-  if(newPwd1.length<4){setErr('pwd-err','⚠️ 新密碼至少需要 4 個字元');return;}
-  if(newPwd1!==newPwd2){setErr('pwd-err','⚠️ 兩次輸入的新密碼不一致');return;}
-  try{
-    await update(ref(db,'/'),{['admins/'+loggedAdmin.emp+'/pwd']:newPwd1});
-    loggedAdmin.pwd=newPwd1;  // 更新本地快取
-    toast('✅ 密碼已更新','tg');
-    ['pwd-old','pwd-new1','pwd-new2'].forEach(id=>{const e=$(id);if(e)e.value='';});
-  }catch(err){setErr('pwd-err','❌ 更新失敗：'+err.message);}
-}
-
-window.doAdminLogin=doAdminLogin;window.doLogout=doLogout;window.showSec=showSec;
-window.switchDeptTab=switchDeptTab;
-window.renderOrders=renderOrders;window.toggleOrd=toggleOrd;window.delOrd=delOrd;window.exportOrders=exportOrders;
-window.addMenu=addMenu;window.delMenu=delMenu;window.clearAllMenus=clearAllMenus;
-window.importMenuCSV=importMenuCSV;window.saveImportedMenus=saveImportedMenus;
-window.addStaff=addStaff;window.delStaff=delStaff;window.importStaffCSV=importStaffCSV;
-window.addAdmin=addAdmin;window.delAdmin=delAdmin;
-window.addVolunteer=addVolunteer;window.delVolunteer=delVolunteer;window.importVolunteerCSV=importVolunteerCSV;
-window.changePwd=changePwd;
 </script>
+
 </body>
 </html>
