@@ -65,8 +65,27 @@ window.toggleDone=(id,s)=>update(ref(db,'orders/'+id),{status:s==='done'?'pendin
 window.exportCSV=()=>{const d=$('orderDate').value,a=socialOrders(d),rows=[['姓名','院區','日期','菜名','飯種','份數','來源','狀態'],...a.map(o=>[o.name,campusName(o.loc),o.date,o.dishName,o.rice==='health'?'五穀飯':'白飯',o.qty||1,o.lateOrder?'截止後補訂':'一般訂餐',o.status==='done'?'已領取':'未領取'])];const csv='\ufeff'+rows.map(r=>r.map(v=>'"'+String(v??'').replace(/"/g,'""')+'"').join(',')).join('\n'),blob=new Blob([csv],{type:'text/csv;charset=utf-8'}),ael=document.createElement('a');ael.href=URL.createObjectURL(blob);ael.download=`社工室訂餐統計_${d}_${campusName(campusFilter)}.csv`;ael.click();URL.revokeObjectURL(ael.href)};
 window.saveMenu=async()=>{const d=$('menuDate').value,dd=$('deadlineDate').value,dt=$('deadlineTime').value;if(!d){toast('請選供餐日期');return}if((dd&&!dt)||(!dd&&dt)){toast('截止日期與截止時間請一起填寫');return}await set(ref(db,'menus/'+d),{chicken:$('m1').value.trim(),fish:$('m2').value.trim(),pork:$('pork').value.trim(),veg:$('veg').value.trim(),deadlineDate:dd,deadlineTime:dt});toast('菜單已儲存')};
 function renderMenus(){if(!$('menuBody'))return;const ks=Object.keys(DB.menus).sort().reverse();$('menuBody').innerHTML=ks.length?ks.map(d=>{const m=DB.menus[d]||{};return`<tr><td>${dateWeek(d)}</td><td>${m.deadlineDate?dateWeek(m.deadlineDate):'未設定'}</td><td>${esc(m.deadlineTime||'—')}</td><td>${esc(m.chicken||m.main1)}</td><td>${esc(m.fish||m.main2)}</td><td>${esc(m.pork)}</td><td>${esc(m.veg)}</td><td><button class="btn light" onclick="editMenu('${d}')">編輯</button> <button class="btn danger" onclick="deleteMenu('${d}')">刪除</button></td></tr>`}).join(''):'<tr><td colspan="8" class="muted">尚無菜單</td></tr>'}
-window.deleteAllMenus=async()=>{const n=Object.keys(DB.menus||{}).length;if(!n){toast('目前沒有菜單可刪除');return}if(!confirm(`確定要刪除全部 ${n} 筆菜單嗎？\n\n此操作無法復原。\n訂單、志工與管理員資料不會被刪除。`))return;if(!confirm('再次確認：真的要刪除「全部菜單」嗎？'))return;try{await remove(ref(db,'menus'));toast('全部菜單已刪除')}catch(e){console.error(e);toast('刪除失敗：'+e.message)}};
-window.editMenu=d=>{const m=DB.menus[d]||{};$('menuDate').value=d;$('deadlineDate').value=m.deadlineDate||'';$('deadlineTime').value=m.deadlineTime||'';$('m1').value=m.chicken||m.main1||'';$('m2').value=m.fish||m.main2||'';$('pork').value=m.pork||'';$('veg').value=m.veg||'';showSec('menu',document.querySelectorAll('.nav')[1])};window.deleteMenu=async d=>{if(confirm('確定刪除此日期菜單？'))await remove(ref(db,'menus/'+d))};
+async function deleteMenusWithOrders(dates){
+  const menuSnap=await get(ref(db,'menus'));
+  const existingMenus=menuSnap.val()||{};
+  const target=dates.filter(d=>Object.prototype.hasOwnProperty.call(existingMenus,d));
+  if(!target.length){toast('菜單已不存在，請重新整理');return false}
+  const orderSnap=await get(ref(db,'orders'));
+  const orders=orderSnap.val()||{};
+  const dateSet=new Set(target);
+  const affected=Object.entries(orders).filter(([id,o])=>o&&o.deptType==='social'&&dateSet.has(o.date));
+  const updates={};
+  for(const d of target)updates['menus/'+d]=null;
+  for(const [id] of affected)updates['orders/'+id]=null;
+  const msg=`確定刪除 ${target.length} 天菜單及對應的 ${affected.length} 筆社工室訂單嗎？\n包含一般訂餐、管理員補訂及已領取紀錄。\n刪除後無法復原！`;
+  if(!confirm(msg))return false;
+  if(!confirm('最後確認：菜單及對應訂單將永久刪除，確定繼續？'))return false;
+  await update(ref(db),updates);
+  toast(`已刪除 ${target.length} 天菜單及 ${affected.length} 筆訂單`);
+  return true;
+}
+window.deleteAllMenus=async()=>{try{const s=await get(ref(db,'menus'));const dates=Object.keys(s.val()||{});if(!dates.length){toast('目前沒有菜單可刪除');return}await deleteMenusWithOrders(dates)}catch(e){console.error(e);toast('刪除失敗：'+e.message)}};
+window.editMenu=d=>{const m=DB.menus[d]||{};$('menuDate').value=d;$('deadlineDate').value=m.deadlineDate||'';$('deadlineTime').value=m.deadlineTime||'';$('m1').value=m.chicken||m.main1||'';$('m2').value=m.fish||m.main2||'';$('pork').value=m.pork||'';$('veg').value=m.veg||'';showSec('menu',document.querySelectorAll('.nav')[1])};window.deleteMenu=async d=>{try{await deleteMenusWithOrders([d])}catch(e){console.error(e);toast('刪除失敗：'+e.message)}};
 function makeKey(){return 'v'+Date.now()+Math.random().toString(36).slice(2,6)}
 window.addStaff=async()=>{const n=$('staffName').value.trim(),note=$('staffNote').value.trim(),campus=$('staffCampus').value;if(!n){toast('請輸入姓名');return}if(Object.values(DB.social_staff).some(v=>String(v.name||'').trim()===n)){toast('此姓名已存在');return}await set(ref(db,'social_staff/'+makeKey()),{name:n,note,dept:'社工室',campus});$('staffName').value='';$('staffNote').value='';toast('志工已新增')};
 function renderStaff(){if(!$('staffBody'))return;const a=Object.entries(DB.social_staff);$('staffCount').textContent=`（${a.length} 人）`;$('staffBody').innerHTML=a.length?a.sort((x,y)=>String(x[1].name).localeCompare(String(y[1].name),'zh-Hant')).map(([k,v])=>`<tr><td>${esc(v.name)}</td><td><select class="fc" onchange="changeCampus('${k}',this.value)"><option value="douliou" ${(v.campus||'douliou')==='douliou'?'selected':''}>斗六院區</option><option value="huwei" ${v.campus==='huwei'?'selected':''}>虎尾院區</option></select></td><td>${esc(v.note||'')}</td><td><button class="btn danger" onclick="deleteStaff('${k}')">刪除</button></td></tr>`).join(''):'<tr><td colspan="4" class="muted">尚無志工資料</td></tr>'}
